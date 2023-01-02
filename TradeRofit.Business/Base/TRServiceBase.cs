@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,7 @@ namespace TradeRofit.Business.Base
         }
 
         protected string User { get => (string)_httpAccessor.HttpContext.Items["SessionUser"]; }
+        protected IMapper AutoMapper { get => (IMapper)_httpAccessor.HttpContext.RequestServices.GetService(typeof(IMapper)); }
         protected VersionInfo Version { get => (VersionInfo)_httpAccessor.HttpContext.RequestServices.GetService(typeof(VersionInfo)); }
         protected TradingViewConfigures TVConfigures { get => (TradingViewConfigures)_httpAccessor.HttpContext.RequestServices.GetService(typeof(TradingViewConfigures)); }
     }

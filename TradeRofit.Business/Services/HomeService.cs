@@ -5,6 +5,8 @@ using System.Text;
 using TradeRofit.Business.Base;
 using TradeRofit.Business.Interfaces;
 using TradeRofit.Core.Responses;
+using TradeRofit.DAL.Repository;
+using TradeRofit.Entities.Models;
 
 namespace TradeRofit.Business.Services
 {

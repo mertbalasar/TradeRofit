@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TradeRofit.Business\TradeRofit.Business.csproj" />
     <ProjectReference Include="..\TradeRofit.Core\TradeRofit.Core.csproj" />
+    <ProjectReference Include="..\TradeRofit.DAL\TradeRofit.DAL.csproj" />
+    <ProjectReference Include="..\TradeRofit.Entities\TradeRofit.Entities.csproj" />
   </ItemGroup>
 
 

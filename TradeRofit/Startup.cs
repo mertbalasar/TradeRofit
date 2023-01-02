@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,10 +12,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TradeRofit.API.Mapper;
 using TradeRofit.API.Middlewares;
 using TradeRofit.Business.Interfaces;
 using TradeRofit.Business.Models.Configures;
 using TradeRofit.Business.Services;
+using TradeRofit.DAL.Models.Configures;
+using TradeRofit.DAL.Repository;
 
 namespace TradeRofit
 {
@@ -34,10 +38,15 @@ namespace TradeRofit
             services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<VersionInfo>>().Value);
             services.Configure< TradingViewConfigures>(Configuration.GetSection("TradingViewConfigures"));
             services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<TradingViewConfigures>>().Value);
+            services.Configure<MongoSettings>(Configuration.GetSection("MongoSettings"));
+            services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoSettings>>().Value);
 
+            services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
             services.AddScoped(typeof(IHomeService), typeof(HomeService));
             services.AddScoped(typeof(ITradingViewRestService), typeof(TradingViewRestService));
+            services.AddScoped(typeof(IUserService), typeof(UserService));
 
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddHttpContextAccessor();
             services.AddControllers();
         }
