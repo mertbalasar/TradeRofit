@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TradeRofit.Core.Responses;
@@ -96,7 +97,7 @@ namespace TradeRofit.DAL.Repository
             return response;
         }
 
-        public async Task<TRResponse<List<TCollection>>> FindManyAsync(FilterDefinition<TCollection> filter)
+        public async Task<TRResponse<List<TCollection>>> FindManyAsync(Expression<Func<TCollection, bool>> filter)
         {
             var response = new TRResponse<List<TCollection>>();
 
@@ -143,7 +144,7 @@ namespace TradeRofit.DAL.Repository
             return response;
         }
 
-        public async Task<TRResponse<DeleteResult>> DeleteManyAsync(FilterDefinition<TCollection> filter)
+        public async Task<TRResponse<DeleteResult>> DeleteManyAsync(Expression<Func<TCollection, bool>> filter)
         {
             var response = new TRResponse<DeleteResult>();
 
