@@ -40,6 +40,8 @@ namespace TradeRofit
             services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<TradingViewConfigures>>().Value);
             services.Configure<MongoSettings>(Configuration.GetSection("MongoSettings"));
             services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoSettings>>().Value);
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<AppSettings>>().Value);
 
             services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
             services.AddScoped(typeof(IHomeService), typeof(HomeService));

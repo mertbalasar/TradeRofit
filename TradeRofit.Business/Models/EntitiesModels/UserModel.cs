@@ -11,8 +11,8 @@ namespace TradeRofit.Business.Models.EntitiesModels
         public string LastName { get; set; }
         public string FullName { get => FirstName + " " + LastName; }
         public string UserName { get; set; }
-        public string Password { get; set; }
         public string Email { get; set; }
+        public string Token { get; set; }
         public DateTime? BirthDay { get; set; }
         public bool IsPremium { get; set; }
     }

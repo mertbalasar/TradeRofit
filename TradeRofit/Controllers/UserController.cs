@@ -27,5 +27,13 @@ namespace TradeRofit.API.Controllers
 
             return APIResponse(response.Result);
         }
+
+        [HttpPost, Route("signin")]
+        public IActionResult SignIn([FromBody] UserSignInRequest request)
+        {
+            var response = _userService.SignIn(request);
+
+            return APIResponse(response.Result);
+        }
     }
 }

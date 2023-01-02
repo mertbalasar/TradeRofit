@@ -12,5 +12,6 @@ namespace TradeRofit.Business.Interfaces
     public interface IUserService
     {
         Task<TRResponse<UserModel>> SignUp(UserSignUpRequest request);
+        Task<TRResponse<UserModel>> SignIn(UserSignInRequest request);
     }
 }

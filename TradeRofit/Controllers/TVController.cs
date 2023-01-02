@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TradeRofit.API.Attributes;
 using TradeRofit.API.Base;
 using TradeRofit.Business.Interfaces;
 
 namespace TradeRofit.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1/tradingview")]
     public class TVController : TRControllerBase

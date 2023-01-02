@@ -13,6 +13,6 @@ namespace TradeRofit.Entities.Base
         [BsonRepresentation(BsonType.ObjectId), BsonId]
         public string Id { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
