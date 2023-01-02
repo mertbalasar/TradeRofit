@@ -32,8 +32,11 @@ namespace TradeRofit
         {
             services.Configure<VersionInfo>(Configuration.GetSection("VersionInfo"));
             services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<VersionInfo>>().Value);
+            services.Configure< TradingViewConfigures>(Configuration.GetSection("TradingViewConfigures"));
+            services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<TradingViewConfigures>>().Value);
 
             services.AddScoped(typeof(IHomeService), typeof(HomeService));
+            services.AddScoped(typeof(ITradingViewRestService), typeof(TradingViewRestService));
 
             services.AddHttpContextAccessor();
             services.AddControllers();

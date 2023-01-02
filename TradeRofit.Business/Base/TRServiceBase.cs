@@ -16,7 +16,7 @@ namespace TradeRofit.Business.Base
         }
 
         protected string User { get => (string)_httpAccessor.HttpContext.Items["SessionUser"]; }
-
         protected VersionInfo Version { get => (VersionInfo)_httpAccessor.HttpContext.RequestServices.GetService(typeof(VersionInfo)); }
+        protected TradingViewConfigures TVConfigures { get => (TradingViewConfigures)_httpAccessor.HttpContext.RequestServices.GetService(typeof(TradingViewConfigures)); }
     }
 }
