@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,11 +53,35 @@ namespace TradeRofit
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddHttpContextAccessor();
             services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "TradeRofit API",
+                    Description = "A Swagger Documentation For TradeRofit Project",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Mert Balasar",
+                        Email = "mertblsr@gmail.com"
+                    }
+                });
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                c.DocumentTitle = "TradeRofit API";
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
