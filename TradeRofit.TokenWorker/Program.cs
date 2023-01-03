@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using TradeRofit.DAL.Models.Configures;
 using TradeRofit.DAL.Repository;
 using TradeRofit.Entities.Models;
 
@@ -27,6 +28,11 @@ namespace TradeRofit.TokenWorker
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
+
+                    services.Configure<MongoSettings>(hostContext.Configuration.GetSection("MongoSettings"));
+                    services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoSettings>>().Value);
+
+                    services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
                 }).UseSerilog();
     }
 }

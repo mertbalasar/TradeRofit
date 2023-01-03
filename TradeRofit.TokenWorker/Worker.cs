@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,19 +14,23 @@ namespace TradeRofit.TokenWorker
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
+        private readonly IMongoRepository<User> _userRepository;
 
         public Worker(ILogger<Worker> logger,
-            IServiceProvider serviceProvider)
+            IMongoRepository<User> userRepository)
         {
             _logger = logger;
+            _userRepository = userRepository;
+
+            _logger.LogInformation("Worker starting");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+                
+                await Task.Delay(100, stoppingToken);
             }
         }
     }
