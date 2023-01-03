@@ -86,6 +86,7 @@ namespace TradeRofit.Business.Services
                     var user = res.Result.First();
 
                     user.Token = GenerateJwtToken(user);
+                    user.TokenExpireAt = DateTime.UtcNow.AddDays(1);
                     var updateRes = await _userRepository.UpdateOneAsync(user);
 
                     if (updateRes.Code != 200)

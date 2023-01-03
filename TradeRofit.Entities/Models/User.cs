@@ -18,6 +18,7 @@ namespace TradeRofit.Entities.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
+        public DateTime TokenExpireAt { get; set; }
         public DateTime? BirthDay { get; set; }
         public bool IsPremium { get; set; } = false;
     }
