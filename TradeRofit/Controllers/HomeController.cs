@@ -27,11 +27,5 @@ namespace TradeRofit.API.Controllers
 
             return APIResponse(response);
         }
-
-        [HttpGet, Route("swagger")]
-        public IActionResult RouteSwagger()
-        {
-            return Redirect("~/swagger/index.html");
-        }
     }
 }

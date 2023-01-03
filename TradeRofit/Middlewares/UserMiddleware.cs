@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LinqKit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -28,26 +29,13 @@ namespace TradeRofit.API.Middlewares
 
             if (!string.IsNullOrEmpty(token))
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-                TimeSpan timeSpan = new TimeSpan(999, 999, 999, 999);
+                var filter = PredicateBuilder.New<User>(true);
+                filter = filter.And(x => x.Token.Equals(token));
 
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                var users = await userRepository.FindManyAsync(filter);
+                if (users.Code == 200 && users.Result != null && users.Result.Count == 1)
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = timeSpan
-                }, out SecurityToken validatedToken);
-
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = jwtToken.Claims.First(x => x.Type == "id").Value;
-
-                var user = userRepository.FindByIdAsync(userId);
-                if (user.Result.Code == 200 && user.Result.Result != null)
-                {
-                    httpContext.Items["SessionUser"] = user.Result.Result;
+                    httpContext.Items["SessionUser"] = users.Result.FirstOrDefault();
                 }
             }
  

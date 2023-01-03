@@ -91,8 +91,8 @@ namespace TradeRofit.Business.Services
 
                     if (updateRes.Code != 200)
                     {
-                        response.Code = 500;
-                        response.Message = "Can not update token to user";
+                        response.Code = updateRes.Code;
+                        response.Message = updateRes.Message;
                         response.Result = null;
                         goto exit;
                     }
@@ -113,6 +113,62 @@ namespace TradeRofit.Business.Services
             }
 
             exit:;
+            return response;
+        }
+
+        public async Task<TRResponse> LogOut()
+        {
+            var response = new TRResponse();
+
+            try
+            {
+                if (User != null)
+                {
+                    User.Token = null;
+                    User.TokenExpireAt = null;
+                    var updateRes = await _userRepository.UpdateOneAsync(User);
+
+                    if (updateRes.Code != 200)
+                    {
+                        response.Code = updateRes.Code;
+                        response.Message = updateRes.Message;
+                    }
+                }
+                else
+                {
+                    response.Code = 401;
+                    response.Message = "The given User can not found";
+                }
+            }
+            catch (Exception e)
+            {
+                response.Code = 500;
+                response.Message = e.Message;
+            }
+
+            return response;
+        }
+
+        public async Task<TRResponse> DeleteUser(string userId)
+        {
+            var response = new TRResponse();
+
+            try
+            {
+                var user = await _userRepository.DeleteByIdAsync(userId);
+
+                if (user.Code != 200)
+                {
+                    response.Code = user.Code;
+                    response.Message = user.Message;
+                }
+            }
+            catch (Exception e)
+            {
+                response.Code = 500;
+                response.Message = e.Message;
+            }
+
             return response;
         }
 

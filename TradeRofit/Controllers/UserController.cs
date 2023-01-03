@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TradeRofit.API.Attributes;
 using TradeRofit.API.Base;
 using TradeRofit.Business.Interfaces;
 using TradeRofit.Core.Requests;
@@ -21,19 +22,35 @@ namespace TradeRofit.API.Controllers
         }
 
         [HttpPost, Route("signup")]
-        public IActionResult SignUp([FromBody] UserSignUpRequest request)
+        public async Task<IActionResult> SignUp([FromBody] UserSignUpRequest request)
         {
-            var response = _userService.SignUp(request);
+            var response = await _userService.SignUp(request);
 
-            return APIResponse(response.Result);
+            return APIResponse(response);
         }
 
         [HttpPost, Route("signin")]
-        public IActionResult SignIn([FromBody] UserSignInRequest request)
+        public async Task<IActionResult> SignIn([FromBody] UserSignInRequest request)
         {
-            var response = _userService.SignIn(request);
+            var response = await _userService.SignIn(request);
 
-            return APIResponse(response.Result);
+            return APIResponse(response);
+        }
+
+        [HttpGet, Route("logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            var response = await _userService.LogOut();
+
+            return APIResponse(response);
+        }
+
+        [HttpDelete, Route("delete/{userId}"), Authorize]
+        public async Task<IActionResult> DeleteUser([FromRoute] string userId)
+        {
+            var response = await _userService.DeleteUser(userId);
+
+            return APIResponse(response);
         }
     }
 }
