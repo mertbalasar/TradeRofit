@@ -8,6 +8,6 @@ namespace TradeRofit.Business.Interfaces
 {
     public interface ITradingViewRestService
     {
-        Task<TRResponse<dynamic>> GetTechnicalDetails();
+        Task<TRResponse<dynamic>> GetTechnicalDetails(string currency);
     }
 }

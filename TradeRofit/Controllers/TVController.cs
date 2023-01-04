@@ -22,9 +22,9 @@ namespace TradeRofit.API.Controllers
         }
 
         [HttpGet, Route("details")]
-        public IActionResult GetDetails()
+        public IActionResult GetDetails([FromQuery] string currency)
         {
-            var response = _tvService.GetTechnicalDetails();
+            var response = _tvService.GetTechnicalDetails(currency);
 
             return APIResponse(response.Result);
         }
